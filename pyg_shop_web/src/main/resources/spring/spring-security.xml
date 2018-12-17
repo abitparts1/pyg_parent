@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+<!-- 以下页面不被拦截 -->
+    <http pattern="/*.html" security="none"></http>
+    <http pattern="/seller/add.do" security="none"></http>
+    <http pattern="/css/**" security="none"></http>
+    <http pattern="/admin/**" security="none"></http>
+    <http pattern="/img/**" security="none"></http>
+    <http pattern="/js/**" security="none"></http>
+    <http pattern="/plugins/**" security="none"></http>
+
+    <!-- 页面拦截规则 -->
+    <http use-expressions="false">
+        <!--1.拦截页面2.指定角色——当前角色是role_admin-->
+        <intercept-url pattern="/**" access="ROLE_SELLER" />
+        <!--1.请求被拦截后指定跳转的页面2.请求身份验证完成后访问的页面3.验证失败跳转的页面4.请求的目标页面不变-->
+        <form-login login-page="/shoplogin.html"  default-target-url="/admin/index.html" authentication-failure-url="/shoplogin.html" always-use-default-target="true"/>
+        <csrf disabled="true"/>
+        <headers>
+            <!--原则是同源，同工程下可以的请求都可以-->
+            <frame-options policy="SAMEORIGIN"/>
+        </headers>
+        <!--退出-->
+        <logout/>
+    </http>
+
+
+    <!-- 认证管理器 -->
+    <authentication-manager>
+        <authentication-provider user-service-ref="userDetailsServiceImpl">
+            <password-encoder ref="passwordEncoder"></password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+
+    <dubbo:application name="pyg_shop_web"/>
+    <dubbo:registry address="zookeeper://192.168.25.128:2181"/>
+    <dubbo:annotation package="com.pyg.service"/>
+
+
+
+</beans:beans>
+

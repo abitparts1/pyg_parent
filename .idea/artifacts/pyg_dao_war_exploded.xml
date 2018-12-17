@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="pyg_dao:war exploded">
+    <output-path>$PROJECT_DIR$/pyg_dao/target/pyg_dao-1.0-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="pyg_dao" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:unknown" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:unknown" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:unknown" />
+          <element id="library" level="project" name="Maven: com.github.miemiedev:mybatis-paginator:unknown" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:unknown" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:unknown" />
+          <element id="archive" name="pyg_pojo-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="pyg_pojo" />
+          </element>
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/pyg_dao/target/pyg_dao-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="pyg_dao/web/Web" />
+    </root>
+  </artifact>
+</component>
